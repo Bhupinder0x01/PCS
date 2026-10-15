@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Punjab PCS Study Checklist</title>
+<title>Punjab PCS + Punjab Government Exams Study Checklist</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff;--fg:#000;--mute:#555;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -46,6 +46,10 @@ input[type=search]{flex:1;min-width:140px;cursor:text;font-weight:500}
 .pn li:first-child{border-top:0}
 .bk{margin-top:10px;font:500 12px 'IBM Plex Mono',monospace;border:2px solid var(--fg);padding:8px 10px;display:inline-block}
 .hide{display:none!important}
+.module-note{padding:10px 12px;border:1px dashed var(--mute);margin:10px 0;font-size:13px}
+.module-head{padding:10px 12px;border-bottom:1px solid var(--fg)}
+.module-head strong{display:block;font-size:16px}
+.module-head small{display:block;color:var(--mute);margin-top:4px;font-size:12px}
 .how{border:2px solid var(--fg);padding:12px 14px;margin:14px 0;font-size:14px}
 .ft{margin-top:24px;font:500 11px 'IBM Plex Mono',monospace;color:var(--mute)}
 @media(max-width:520px){.pn{padding-left:16px}.tag{display:none}}
@@ -56,11 +60,11 @@ input[type=search]{flex:1;min-width:140px;cursor:text;font-weight:500}
 <div class="w">
 <div class="top">
 <div><div class="mono" style="font-size:11px;letter-spacing:.14em;font-weight:600">PUNJAB PCS + BACKUP EXAMS</div><h1>STUDY CHECKLIST</h1>
-<div>Tier 1 covers ~70% of Prelims. Finish all 40 before Tier 2.</div></div>
+<div>Common PCS foundation + targeted add-on modules for Punjab government recruitment exams.</div></div>
 <div><div class="big" id="big">0/40</div><div class="bar"><div id="fill"></div></div><div class="mono" id="sub" style="font-size:11px;text-align:right;margin-top:6px"></div></div>
 </div>
 <div class="ctl">
-<button id="b1" class="on">TIER 1 · TOP 40</button><button id="b2">TIER 2 · REST</button>
+<button id="b1" class="on">TIER 1 · TOP 40</button><button id="b2">TIER 2 · REST</button><button id="b3">EXAM ADD-ON MODULES</button>
 </div>
 <div class="ctl">
 <input type="search" id="q" placeholder="Search topics, books, keywords" aria-label="Search">
@@ -69,7 +73,7 @@ input[type=search]{flex:1;min-width:140px;cursor:text;font-weight:500}
 <div class="ctl" id="chips"></div>
 <div class="how" id="how"><b>How to use:</b> tap the box to tick, tap the title to expand. For each topic: read the book chapter, make short notes, solve PYQs, revise after 7 days. Ticks are saved automatically on this device.</div>
 <div id="app"></div>
-<div class="ft">Source: PPSC PCS PYQ analysis 2014-2025 · <span class="tag u">PPSC</span> = unique to the Punjab paper</div>
+<div class="ft">Use the latest official recruitment notification to confirm each exam’s syllabus, eligibility, and selection stages. Modules are preparation checklists, not a guarantee of coverage.</div>
 </div>
 <script>
 var S=["History","Geography","Polity","Economy","Environment","Science & Tech","CA & Punjab GK"];
@@ -127,7 +131,64 @@ var T2={
 "Mains":["Essay: 10 recurring themes","English: precis, grammar, vocabulary","Punjabi: translation, essay, grammar","GS I answer writing","GS II answer writing","GS III answer writing","GS IV Ethics and case studies","Optional Paper I and II"],
 "Backup exams (only on notification)":["Computer knowledge (PSSSB, PSPCL)","Speed math shortcuts","IPC / CrPC / Evidence Act","Punjab Police Act and Rules","Domain subjects (PPSC departmental)","Power sector awareness (PSPCL)","Pedagogy and Child Development","Physical fitness training (start early)"]
 };
-var K="pcs-checklist-v1",st={done:{},open:{}},tier=1,sec=-1,allOpen=false;
+
+// Exam-specific add-on modules. These are broad preparation areas; always verify the latest official notification.
+var T3=[
+{g:"Punjab Police",e:"Punjab Police Constable / SI / Jail Warder",t:"Recruitment pattern and eligibility",d:"Read the current advertisement: age, qualification, category relaxations, exam stages, negative marking, document verification and physical standards."},
+{g:"Punjab Police",e:"Punjab Police Constable / SI / Jail Warder",t:"Computer and digital literacy",d:"Computer fundamentals, hardware/software, operating systems, office applications, internet/email, networking basics, cybersecurity, digital payments and data privacy."},
+{g:"Punjab Police",e:"Punjab Police Constable / SI / Jail Warder",t:"Police and legal awareness",d:"Study only the laws and provisions named in the current syllabus/notification; understand current criminal-law framework, police organisation, public safety and human-rights basics."},
+{g:"Punjab Police",e:"Punjab Police Constable / SI / Jail Warder",t:"Physical screening and fitness",d:"Check official height/chest/other standards and physical-test events for your category; build running, endurance and strength gradually and safely."},
+{g:"Punjab Police",e:"Punjab Police Constable / SI / Jail Warder",t:"Police recruitment mocks",d:"Practise the exact paper format, timed section tests, previous papers where available, error log and full-length mock tests."},
+
+{g:"Patwari & Revenue",e:"Punjab Patwari / Revenue-related posts",t:"Land records and revenue terminology",d:"Jamabandi, khasra, khatauni, mutation/intkal, girdawari, ownership/possession terminology and the roles of revenue officials, as required by the notified syllabus."},
+{g:"Patwari & Revenue",e:"Punjab Patwari / Revenue-related posts",t:"Punjab land administration",d:"Revenue administration structure, land measurement units and conversions, record maintenance and relevant Punjab-specific laws/rules listed in the notification."},
+{g:"Patwari & Revenue",e:"Punjab Patwari / Revenue-related posts",t:"Arithmetic and data handling",d:"Percentages, ratios, averages, profit/loss, interest, time/work, speed/distance, mensuration, tables, charts and calculation speed."},
+{g:"Patwari & Revenue",e:"Punjab Patwari / Revenue-related posts",t:"Computer practical knowledge",d:"File management, word processing, spreadsheets, internet use, keyboard skills and any prescribed Punjabi/English typing test."},
+
+{g:"PSSSB General Posts",e:"Clerk / Senior Assistant / other PSSSB posts",t:"Punjabi language requirement",d:"Check the required Punjabi qualification and exam level in the advertisement; practise grammar, comprehension, vocabulary and translation if included."},
+{g:"PSSSB General Posts",e:"Clerk / Senior Assistant / other PSSSB posts",t:"Typing and computer proficiency",d:"Practise the exact typing language, speed and accuracy requirements; office software, spreadsheets, email, file handling and computer proficiency tests where prescribed."},
+{g:"PSSSB General Posts",e:"Clerk / Senior Assistant / other PSSSB posts",t:"General aptitude speed",d:"Timed arithmetic, reasoning, data interpretation, English and Punjabi MCQs using the exact post-specific paper scheme."},
+{g:"PSSSB General Posts",e:"Clerk / Senior Assistant / other PSSSB posts",t:"Post-specific syllabus check",d:"Compare every heading in the current advertisement with your PCS core; add any departmental knowledge, service rules or skill test separately."},
+
+{g:"Inspector & Taxation",e:"Excise and Taxation Inspector / other inspector posts",t:"Commerce and taxation basics",d:"Where prescribed: basic accounting, business and commerce concepts, taxation/GST basics, public finance and relevant departmental terminology."},
+{g:"Inspector & Taxation",e:"Excise and Taxation Inspector / other inspector posts",t:"Numerical ability and reasoning",d:"Timed arithmetic, percentages, ratios, averages, profit/loss, interest, data interpretation and logical reasoning."},
+{g:"Inspector & Taxation",e:"Excise and Taxation Inspector / other inspector posts",t:"Departmental awareness",d:"Study the role, functions and laws of the recruiting department only to the depth required by the official syllabus."},
+{g:"Inspector & Taxation",e:"Excise and Taxation Inspector / other inspector posts",t:"Objective exam practice",d:"Solve previous papers and timed mocks; track accuracy by subject and revise recurring errors."},
+
+{g:"PSPCL & Power Sector",e:"PSPCL / power-sector recruitment",t:"Electricity and power-sector awareness",d:"Basic electricity concepts, generation, transmission, distribution, renewable energy, power-sector institutions and current schemes where relevant."},
+{g:"PSPCL & Power Sector",e:"PSPCL / power-sector recruitment",t:"Technical subject module",d:"For technical posts, study the prescribed diploma/degree discipline syllabus (electrical, electronics, IT, accounts or other specified field). General PCS GS is not a substitute."},
+{g:"PSPCL & Power Sector",e:"PSPCL / power-sector recruitment",t:"Recruitment-specific skills",d:"Check technical test, computer test, typing, trade test, experience and qualification requirements for the exact post."},
+
+{g:"Teaching & Education",e:"Punjab teacher / education-department recruitment",t:"Pedagogy and child development",d:"Learning and development, inclusive education, teaching methods, assessment, classroom practice and educational psychology where required."},
+{g:"Teaching & Education",e:"Punjab teacher / education-department recruitment",t:"Subject-specific preparation",d:"Prepare the exact teaching subject and level from the official syllabus; PCS General Studies alone will not cover professional subject knowledge."},
+{g:"Teaching & Education",e:"Punjab teacher / education-department recruitment",t:"Teacher eligibility and language rules",d:"Verify required teacher eligibility tests, professional qualifications, Punjabi requirements, experience and document rules for the post."},
+
+{g:"Technical & IT",e:"Punjab technical / engineering / IT / programmer posts",t:"Core professional syllabus",d:"Use the exact discipline syllabus: for CSE/IT, commonly programming, data structures, algorithms, DBMS, operating systems, networks, software engineering and cybersecurity when prescribed."},
+{g:"Technical & IT",e:"Punjab technical / engineering / IT / programmer posts",t:"Technical problem-solving",d:"Practise technical MCQs, coding or practical tests where required, and revise weak subjects using the notified exam pattern."},
+{g:"Technical & IT",e:"Punjab technical / engineering / IT / programmer posts",t:"Professional eligibility",d:"Confirm degree/diploma branch, minimum marks, registration, experience, equivalence and any required professional licence."},
+
+{g:"Health & Medical",e:"Punjab health / medical / paramedical recruitment",t:"Professional subject module",d:"Nursing, pharmacy, lab technology, medicine, public health or other role-specific professional knowledge as named in the notification."},
+{g:"Health & Medical",e:"Punjab health / medical / paramedical recruitment",t:"Professional registration and eligibility",d:"Verify required qualification, council registration, internship, experience, age and documents."},
+
+{g:"Agriculture & Veterinary",e:"Punjab agriculture / horticulture / veterinary posts",t:"Agriculture and allied sciences",d:"Crop science, soils, agronomy, irrigation, plant protection, horticulture, animal husbandry or veterinary topics only as relevant to the advertised role."},
+{g:"Agriculture & Veterinary",e:"Punjab agriculture / horticulture / veterinary posts",t:"Punjab agricultural issues",d:"Punjab cropping patterns, diversification, groundwater, procurement, agricultural schemes and current state policies."},
+
+{g:"Forest & Environment",e:"Punjab forest / wildlife / environment posts",t:"Forest and ecology module",d:"Forest ecology, biodiversity, wildlife, conservation, environmental legislation and protected areas as specified for the post."},
+{g:"Forest & Environment",e:"Punjab forest / wildlife / environment posts",t:"Physical and field requirements",d:"Check any physical standards, endurance/walking tests, medical criteria and field-specific requirements in the current notification."},
+
+{g:"Judicial & Legal",e:"Punjab judicial / legal / prosecution posts",t:"Law-specific syllabus",d:"Prepare constitutional law, procedural law, evidence and substantive laws exactly as prescribed for the role; verify whether the current criminal-law codes are specified."},
+{g:"Judicial & Legal",e:"Punjab judicial / legal / prosecution posts",t:"Legal drafting and language",d:"Where applicable, practise judgment writing, legal reasoning, translation, Punjabi language and professional legal writing."},
+{g:"Judicial & Legal",e:"Punjab judicial / legal / prosecution posts",t:"Professional eligibility",d:"Check law degree, bar enrolment, practice experience, age, language requirements and other post-specific eligibility."},
+
+{g:"Fire, Jail & Field Services",e:"Fire services / jail / field and uniformed posts",t:"Role-specific knowledge",d:"Study fire safety, emergency response, prison administration or the relevant department's prescribed knowledge; do not assume one syllabus fits all posts."},
+{g:"Fire, Jail & Field Services",e:"Fire services / jail / field and uniformed posts",t:"Physical and medical tests",d:"Check official event details, measurements, medical standards, driving/trade licences and any practical tests required."},
+
+{g:"All Recruitment Exams",e:"Every Punjab government recruitment",t:"Official notification checklist",d:"Record post name, recruiting body, eligibility, age cut-off, syllabus, marks, negative marking, language conditions, exam stages, application dates and document list."},
+{g:"All Recruitment Exams",e:"Every Punjab government recruitment",t:"Previous papers and mock analysis",d:"Use official or trustworthy papers; practise under time limits and log accuracy, time per question, weak topics and repeated mistakes."},
+{g:"All Recruitment Exams",e:"Every Punjab government recruitment",t:"Documents and application readiness",d:"Keep educational certificates, Punjabi qualification proof, category/residence certificates where applicable, photo/signature and other required documents ready; follow the notice."}
+];
+
+var K="pcs-checklist-v1",st={done:{},open:{}},tier=1,sec=-1,mod=-1,allOpen=false;
 try{var r=localStorage.getItem(K);if(r)st=JSON.parse(r)}catch(e){}
 function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
 function $(i){return document.getElementById(i)}
@@ -147,7 +208,7 @@ h+='<div class="tp'+(d?' done':'')+(o?' open':'')+'"><div class="row"><label cla
 +'<span class="tag'+(t[6]?' u':'')+'">'+(t[6]?'PPSC ':'')+t[3]+'</span><span class="chev">'+(o?'−':'+')+'</span></div>'
 +'<div class="pn"><ul>'+t[5].split("|").map(function(x){return"<li>"+x+"</li>"}).join("")+'</ul><div class="bk">BOOK: '+t[4]+'</div></div></div>'});
 h+='</div>'});
-}else{
+}else if(tier==2){
 Object.keys(T2).forEach(function(s,si){
 var it=T2[s].map(function(x,i){return[x,"b"+si+"_"+i]}).filter(function(p){return!q||p[0].toLowerCase().indexOf(q)>=0||s.toLowerCase().indexOf(q)>=0});
 if(!it.length)return;
@@ -156,23 +217,44 @@ h+='<div class="sec"><div class="sh"><span>'+s.toUpperCase()+'</span><span>'+dn+
 it.forEach(function(p){var d=st.done[p[1]];
 h+='<div class="tp'+(d?' done':'')+'"><div class="row"><label class="cb"><input type="checkbox" data-id="'+p[1]+'" aria-label="Done: '+p[0]+'"'+(d?' checked':'')+'></label><span class="tt"><span class="t">'+p[0]+'</span></span></div></div>'});
 h+='</div>'});
+}else{
+var groups={};
+T3.forEach(function(t,i){
+if(mod>=0&&T3[mod].g!==t.g)return;
+if(q&&!(t.g+" "+t.e+" "+t.t+" "+t.d).toLowerCase().includes(q))return;
+(groups[t.g]||(groups[t.g]=[])).push([t,i]);
+});
+Object.keys(groups).forEach(function(g){
+var rows=groups[g],dn=rows.filter(function(p){return st.done["x"+p[1]]}).length;
+h+='<div class="sec"><div class="sh"><span>'+g.toUpperCase()+'</span><span>'+dn+'/'+rows.length+'</span></div>';
+var lastExam="";
+rows.forEach(function(p){
+var t=p[0],i=p[1],id="x"+i,d=st.done[id],o=allOpen||st.open[id];
+if(lastExam!==t.e){h+='<div class="module-head"><strong>'+t.e+'</strong><small>Use only where relevant to the advertised post; verify the current official notification.</small></div>';lastExam=t.e}
+h+='<div class="tp'+(d?' done':'')+(o?' open':'')+'"><div class="row"><label class="cb"><input type="checkbox" data-id="'+id+'" aria-label="Done: '+t.t+'"'+(d?' checked':'')+'></label><button class="tt" data-op="'+id+'" aria-expanded="'+(o?'true':'false')+'" style="border:0"><span class="t">'+t.t+'</span></button><span class="chev">'+(o?'−':'+')+'</span></div><div class="pn"><ul><li>'+t.d+'</li></ul></div></div>';
+});
+h+='</div>';
+});
+if(!h)h='<p>No modules match your search.</p>';
 }
 $("app").innerHTML=h||'<p>No topics match your search.</p>';
 stats();
 }
 function stats(){
-var a=T.filter(function(t){return st.done["t"+t[0]]}).length,n2=0,t2=0;
+var a=T.filter(function(t){return st.done["t"+t[0]]}).length,n2=0,t2=0,n3=0;
 Object.keys(T2).forEach(function(s,si){T2[s].forEach(function(x,i){t2++;if(st.done["b"+si+"_"+i])n2++})});
-var tot=tier==1?40:t2,dn=tier==1?a:n2;
+T3.forEach(function(t,i){if(st.done["x"+i])n3++});
+var tot=tier==1?40:(tier==2?t2:T3.length),dn=tier==1?a:(tier==2?n2:n3);
 $("big").textContent=dn+"/"+tot;
 $("fill").style.width=(dn/tot*100)+"%";
-$("sub").textContent=tier==1?Math.round(a/40*100)+"% of Tier 1 · Tier 2: "+n2+"/"+t2:Math.round(n2/t2*100)+"% of Tier 2 · Tier 1: "+a+"/40";
+$("sub").textContent=tier==1?Math.round(a/40*100)+"% of Tier 1 · Tier 2: "+n2+"/"+t2+" · Add-ons: "+n3+"/"+T3.length:(tier==2?Math.round(n2/t2*100)+"% of Tier 2 · Tier 1: "+a+"/40":"Add-on modules · "+Math.round(n3/T3.length*100)+"% complete · Core: "+a+"/40");
 }
 function chips(){
 var h="";
 if(tier==1){h='<button data-s="-1" class="'+(sec<0?'on':'')+'">ALL</button>'+S.map(function(s,i){return'<button data-s="'+i+'" class="'+(sec==i?'on':'')+'">'+s.toUpperCase()+'</button>'}).join("")}
-$("chips").innerHTML=h;$("chips").classList.toggle("hide",tier!=1);
-$("exp").classList.toggle("hide",tier!=1);$("how").classList.toggle("hide",tier!=1);
+else if(tier==3){var gs=[...new Set(T3.map(function(t){return t.g}))];h='<button data-m="-1" class="'+(mod<0?'on':'')+'">ALL MODULES</button>'+gs.map(function(g,i){var ix=T3.findIndex(function(t){return t.g===g});return'<button data-m="'+ix+'" class="'+(mod===ix?'on':'')+'">'+g.toUpperCase()+'</button>'}).join("")}
+$("chips").innerHTML=h;$("chips").classList.toggle("hide",tier==2);
+$("exp").classList.toggle("hide",tier==2);$("how").classList.toggle("hide",tier==2);
 }
 document.addEventListener("change",function(e){
 var id=e.target.getAttribute&&e.target.getAttribute("data-id");
@@ -184,9 +266,11 @@ document.addEventListener("click",function(e){
 var b=e.target.closest("button");if(!b)return;
 if(b.hasAttribute("data-op")){var id=b.getAttribute("data-op");if(st.open[id])delete st.open[id];else st.open[id]=1;allOpen=false;$("exp").textContent="EXPAND ALL";save();render()}
 else if(b.hasAttribute("data-s")){sec=+b.getAttribute("data-s");chips();render()}
+else if(b.hasAttribute("data-m")){var mv=+b.getAttribute("data-m");mod=mv<0?-1:mv;chips();render()}
 });
-$("b1").onclick=function(){tier=1;$("b1").className="on";$("b2").className="";chips();render()};
-$("b2").onclick=function(){tier=2;$("b2").className="on";$("b1").className="";chips();render()};
+$("b1").onclick=function(){tier=1;$("b1").className="on";$("b2").className="";$("b3").className="";chips();render()};
+$("b2").onclick=function(){tier=2;$("b2").className="on";$("b1").className="";$("b3").className="";chips();render()};
+$("b3").onclick=function(){tier=3;$("b3").className="on";$("b1").className="";$("b2").className="";chips();render()};
 $("q").oninput=render;
 $("exp").onclick=function(){allOpen=!allOpen;this.textContent=allOpen?"COLLAPSE ALL":"EXPAND ALL";render()};
 $("rst").onclick=function(){if(confirm("Clear all ticks?")){st.done={};save();render()}};
